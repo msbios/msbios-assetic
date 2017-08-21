@@ -3,10 +3,10 @@
  * @access protetced
  * @author Judzhin Miles <info[woof-woof]msbios.com>
  */
+
 namespace MSBios\Assetic\Listener;
 
 use Assetic\Asset\AssetInterface;
-use MSBios\Assetic\AssetManager;
 use MSBios\Assetic\AssetManagerInterface;
 use MSBios\Assetic\Module;
 use Zend\EventManager\EventInterface;
@@ -23,31 +23,28 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class AssetListener
 {
     /**
-     * @param EventInterface $event
+     * @param EventInterface $e
      */
-    public function onRender(EventInterface $event)
+    public function onDispatchError(EventInterface $e)
     {
-        /** @var array $error */
-        $error = $event->getError();
-
-        if (empty($error) || Application::ERROR_ROUTER_NO_MATCH !== $error) {
+        if ($e->getError() !== Application::ERROR_ROUTER_NO_MATCH) {
             return;
         }
 
         /** @var ServiceLocatorInterface $serviceManager */
-        $serviceManager = $event->getTarget()
+        $serviceManager = $e->getTarget()
             ->getServiceManager();
 
         /** @var AssetManagerInterface $assetManager */
-        $assetManager = $serviceManager->get(AssetManager::class);
+        $assetManager = $serviceManager->get(AssetManagerInterface::class);
 
         /** @var AssetInterface $asset */
-        if (! $asset = $assetManager->resolve($event->getRequest())) {
+        if (!$asset = $assetManager->resolve($e->getRequest())) {
             return;
         }
 
         /** @var Response $response */
-        $response = $event->getResponse();
+        $response = $e->getResponse();
 
         /** @var HttpResponse $response */
         $response = $response ?: new HttpResponse;
@@ -67,8 +64,10 @@ class AssetListener
             ->addHeaderLine('Content-Type', $asset->mimetype)
             ->addHeaderLine('Content-Length', mb_strlen($response->getContent(), '8bit'));
 
-        $event->setName(MvcEvent::EVENT_FINISH);
-        $event->setResponse($response);
-        $event->getTarget()->getEventManager()->triggerEvent($event);
+        $e->setName(MvcEvent::EVENT_FINISH);
+        $e->setResponse($response);
+        $e->getTarget()
+            ->getEventManager()
+            ->triggerEvent($e);
     }
 }

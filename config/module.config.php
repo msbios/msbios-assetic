@@ -5,6 +5,8 @@
  */
 namespace MSBios\Assetic;
 
+use Zend\ServiceManager\Factory\InvokableFactory;
+
 return [
 
     'service_manager' => [
@@ -16,16 +18,14 @@ return [
             Resolver\MimeResolver::class
         ],
         'factories' => [
+            Module::class =>
+                Factory\ModuleFactory::class,
 
             // Managers
-            AssetManager::class =>
-                Factory\AssetManagerFactory::class,
-            CacheManager::class =>
-                \Zend\ServiceManager\Factory\InvokableFactory::class,
-            FilterManager::class =>
-                \Zend\ServiceManager\Factory\InvokableFactory::class,
-            ResolverManager::class =>
-                Factory\ResolverManagerFactory::class,
+            AssetManagerInterface::class => Factory\AssetManagerFactory::class,
+            CacheManager::class => InvokableFactory::class,
+            FilterManager::class => InvokableFactory::class,
+            ResolverManager::class => Factory\ResolverManagerFactory::class,
 
             // Reolvers
             Resolver\CollectionResolver::class =>
@@ -33,11 +33,11 @@ return [
             Resolver\MapResolver::class =>
                 Factory\MapResolverFactory::class,
             Resolver\PathStackResolver::class => Factory\PathStackResolverFactory::class,
-
-            Module::class =>
-                Factory\ModuleFactory::class,
-
         ],
+
+        'aliases' => [
+            AssetManager::class => AssetManagerInterface::class
+        ]
     ],
 
     'controllers' => [
@@ -46,33 +46,16 @@ return [
         ],
     ],
 
-    'console' => [
-        'router' => [
-            'routes' => [
-                'user-reset-password' => [
-                    'type' => 'simple',  // This is the default, and may be omitted; more on types below
-                    'options' => [
-                        'route' => 'user',
-                        'defaults' => [
-                            'controller' => Controller\IndexController::class,
-                            'action' => 'resetpassword',
-                        ],
-                    ],
-                ],
-            ],
-        ],
-    ],
-
     Module::class => [
 
         'default_cleanup_buffer' => true,
 
         'listeners' => [
-            [
+            Listener\AssetListener::class => [
                 'listener' => Listener\AssetListener::class,
-                'method' => 'onRender',
-                'event' => \Zend\Mvc\MvcEvent::EVENT_RENDER,
-                'priority' => -1000050000,
+                'method' => 'onDispatchError',
+                'event' => \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
+                'priority' => 1,
             ],
         ],
 
