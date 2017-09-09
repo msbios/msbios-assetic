@@ -25,14 +25,14 @@
   },
   "require": {
     "kriswallsmith/assetic": "^1.4",
-    "msbios/msbios": "^0.0.1"
+    "msbios/msbios": "~1.0"
   },
   "require-dev": {
-    "zendframework/zend-mvc": "^3.1",
     "phpunit/phpunit": "^5.7",
+    "zendframework/zend-mvc": "^3.1",
     "zendframework/zend-test": "^3.1",
     "squizlabs/php_codesniffer": "^3.0",
-    "msbios/debug": "^0.0.3"
+    "msbios/debug": "~1.0"
   },
   "scripts": {
     "cs-check": "phpcs",

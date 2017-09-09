@@ -39,7 +39,7 @@ class AssetListener
         $assetManager = $serviceManager->get(AssetManagerInterface::class);
 
         /** @var AssetInterface $asset */
-        if (!$asset = $assetManager->resolve($e->getRequest())) {
+        if (! $asset = $assetManager->resolve($e->getRequest())) {
             return;
         }
 
