@@ -28,7 +28,7 @@ class MapResolverFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new MapResolver(
-            $container->get(Module::class)->get('maps')
+            $container->get(Module::class)['maps']
         );
     }
 }

@@ -18,32 +18,31 @@ use Zend\Stdlib\ArrayUtils;
  */
 class MapResolver implements ResolverInterface, MimeResolverAwareInterface
 {
-    /** @var Config */
-    protected $maps;
+    use MimeResolverAwareTrait;
 
-    /** @var MimeResolverInterface */
-    protected $mimeResolver;
+    /** @var array */
+    protected $maps;
 
     /**
      * MapResolver constructor.
-     * @param Config $maps
+     * @param $maps
      */
-    public function __construct(Config $maps)
+    public function __construct($maps)
     {
         $this->clearMaps();
         $this->addMaps($maps);
     }
 
     /**
-     * @param Config $maps
+     * @param array $maps
      * @return $this
      */
-    public function addMaps(Config $maps)
+    public function addMaps(array $maps)
     {
-         $this->maps = new Config(ArrayUtils::merge(
-             $this->maps->toArray(),
-             $maps->toArray()
-         ));
+         $this->maps = ArrayUtils::merge(
+             $this->maps,
+             $maps
+         );
 
          return $this;
     }
@@ -53,8 +52,7 @@ class MapResolver implements ResolverInterface, MimeResolverAwareInterface
      */
     public function clearMaps()
     {
-        /** @var Config maps */
-        $this->maps = new Config([]);
+        $this->maps = [];
         return $this;
     }
 
@@ -64,9 +62,13 @@ class MapResolver implements ResolverInterface, MimeResolverAwareInterface
      */
     public function resolve($path)
     {
-        if (! $source = $this->maps->get($path)) {
+
+        if (! isset($this->maps[$path])) {
             return null;
         }
+
+        /** @var string $source */
+        $source = $this->maps[$path];
 
         /** @var AssetInterface $asset */
         $asset = (! filter_var($source, FILTER_VALIDATE_URL))
@@ -76,23 +78,5 @@ class MapResolver implements ResolverInterface, MimeResolverAwareInterface
             ->resolve($source);
 
         return $asset;
-    }
-
-    /**
-     * @param MimeResolverInterface $mimeResolver
-     * @return $this
-     */
-    public function setMimeResolver(MimeResolverInterface $mimeResolver)
-    {
-        $this->mimeResolver = $mimeResolver;
-        return $this;
-    }
-
-    /**
-     * @return MimeResolverInterface
-     */
-    public function getMimeResolver()
-    {
-        return $this->mimeResolver;
     }
 }

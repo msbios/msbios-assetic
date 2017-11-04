@@ -7,6 +7,7 @@
 namespace MSBios\Assetic\Listener;
 
 use Assetic\Asset\AssetInterface;
+use MSBios\Assetic\AssetManager;
 use MSBios\Assetic\AssetManagerInterface;
 use MSBios\Assetic\Module;
 use Zend\EventManager\EventInterface;
@@ -22,6 +23,18 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class AssetListener
 {
+    /** @var AssetManagerInterface  */
+    protected $assetManager;
+
+    /**
+     * AssetListener constructor.
+     * @param AssetManagerInterface $assetManager
+     */
+    public function __construct(AssetManagerInterface $assetManager)
+    {
+        $this->assetManager = $assetManager;
+    }
+
     /**
      * @param EventInterface $e
      */
@@ -35,11 +48,8 @@ class AssetListener
         $serviceManager = $e->getTarget()
             ->getServiceManager();
 
-        /** @var AssetManagerInterface $assetManager */
-        $assetManager = $serviceManager->get(AssetManagerInterface::class);
-
         /** @var AssetInterface $asset */
-        if (! $asset = $assetManager->resolve($e->getRequest())) {
+        if (! $asset = $this->assetManager->resolve($e->getRequest())) {
             return;
         }
 
@@ -50,7 +60,7 @@ class AssetListener
         $response = $response ?: new HttpResponse;
         $response->setStatusCode(Response::STATUS_CODE_200);
 
-        if ($serviceManager->get(Module::class)->get('default_cleanup_buffer')) {
+        if ($serviceManager->get(Module::class)['default_cleanup_buffer']) {
             // Only clean the output buffer if it's turned on and something
             // has been buffered.
             if (ob_get_length() > 0) {

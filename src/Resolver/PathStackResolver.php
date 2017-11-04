@@ -18,11 +18,10 @@ use Zend\Stdlib\SplStack;
  */
 class PathStackResolver implements ResolverInterface, MimeResolverAwareInterface
 {
+    use MimeResolverAwareTrait;
+
     /** @var SplStack */
     protected $paths;
-
-    /** @var  MimeResolverInterface */
-    protected $mimeResolver;
 
     /**
      * PathStackResolver constructor.
@@ -91,16 +90,14 @@ class PathStackResolver implements ResolverInterface, MimeResolverAwareInterface
      */
     public function resolve($path)
     {
-        if (/* $this->isLfiProtectionOn() && */
-        preg_match('#\.\.[\\\/]#', $path)
-        ) {
+        if (/* $this->isLfiProtectionOn() && */ preg_match('#\.\.[\\\/]#', $path)) {
             return null;
         }
 
         /** @var string $path */
         foreach ($this->paths as $item) {
 
-            /** @var SplFileInfo $file */
+            /** @var \SplFileInfo $file */
             $file = new \SplFileInfo($item . $path);
 
             if ($file->isReadable() && ! $file->isDir()) {
@@ -114,23 +111,5 @@ class PathStackResolver implements ResolverInterface, MimeResolverAwareInterface
                 return $asset;
             }
         }
-    }
-
-    /**
-     * @param MimeResolverInterface $mimeResolver
-     * @return $this
-     */
-    public function setMimeResolver(MimeResolverInterface $mimeResolver)
-    {
-        $this->mimeResolver = $mimeResolver;
-        return $this;
-    }
-
-    /**
-     * @return MimeResolverInterface
-     */
-    public function getMimeResolver()
-    {
-        return $this->mimeResolver;
     }
 }

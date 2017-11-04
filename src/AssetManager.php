@@ -8,14 +8,13 @@ namespace MSBios\Assetic;
 
 use Assetic\Asset\AssetInterface;
 use MSBios\Assetic\Exception\RuntimeException;
-use Zend\Config\Config;
 use Zend\Http\PhpEnvironment\Request;
 
 /**
  * Class AssetManager
  * @package MSBios\Assetic
  */
-class AssetManager implements CacheManagerAwareInterface, FilterManagerAwareInterface
+class AssetManager implements AssetManagerInterface
 {
     /** @var ResolverManagerInterface */
     protected $resolverManager;
@@ -29,10 +28,17 @@ class AssetManager implements CacheManagerAwareInterface, FilterManagerAwareInte
     /**
      * AssetManager constructor.
      * @param ResolverManagerInterface $resolverManager
+     * @param CacheManagerInterface $cacheManager
+     * @param FilterManagerInterface $filterManager
      */
-    public function __construct(ResolverManagerInterface $resolverManager)
-    {
+    public function __construct(
+        ResolverManagerInterface $resolverManager,
+        CacheManagerInterface $cacheManager,
+        FilterManagerInterface $filterManager
+    ) {
         $this->resolverManager = $resolverManager;
+        $this->cacheManager = $cacheManager;
+        $this->filterManager = $filterManager;
     }
 
     /**
@@ -72,41 +78,5 @@ class AssetManager implements CacheManagerAwareInterface, FilterManagerAwareInte
         // @codeCoverageIgnoreEnd
 
         return $asset;
-    }
-
-    /**
-     * @param CacheManagerInterface $cacheManager
-     * @return $this
-     */
-    public function setCacheManager(CacheManagerInterface $cacheManager)
-    {
-        $this->cacheManager = $cacheManager;
-        return $this;
-    }
-
-    /**
-     * @return CacheManagerInterface
-     */
-    public function getCacheManager()
-    {
-        return $this->cacheManager;
-    }
-
-    /**
-     * @param FilterManagerInterface $filterManager
-     * @return $this
-     */
-    public function setFilterManager(FilterManagerInterface $filterManager)
-    {
-        $this->filterManager = $filterManager;
-        return $this;
-    }
-
-    /**
-     * @return FilterManagerInterface
-     */
-    public function getFilterManager()
-    {
-        return $this->filterManager;
     }
 }

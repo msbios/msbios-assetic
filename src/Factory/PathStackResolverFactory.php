@@ -25,7 +25,7 @@ class PathStackResolverFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return (new PathStackResolver)->addPaths(
-            $container->get(Module::class)->get('paths')
+            $container->get(Module::class)['paths']
         );
     }
 }

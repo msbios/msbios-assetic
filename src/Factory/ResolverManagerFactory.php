@@ -42,16 +42,15 @@ class ResolverManagerFactory implements FactoryInterface
          * @var string $resolverName
          * @var int $priority
          */
-        foreach ($options->get('resolvers') as $resolverName => $priority) {
-
-            /** @var ResolverInterface $resolver */
-            $resolver = $container->get($resolverName);
-
-            if (! $resolver instanceof ResolverInterface) {
+        foreach ($options['resolvers'] as $resolverName => $priority) {
+            if (! $container->has($resolverName)) {
                 throw new RuntimeException(
                     "Resolver '{$requestedName}' does not implement the required interface ResolverInterface."
                 );
             }
+
+            /** @var ResolverInterface $resolver */
+            $resolver = $container->get($resolverName);
 
             if ($resolver instanceof ResolverManagerAwareInterface) {
                 $resolver->setResolverManager($resolverManager);

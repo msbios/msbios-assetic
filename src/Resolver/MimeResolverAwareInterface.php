@@ -15,7 +15,7 @@ interface MimeResolverAwareInterface
      * @param MimeResolverInterface $mimeResolver
      * @return mixed
      */
-    public function setMimeResolver(MimeResolverInterface $mimeResolver);
+    public function setMimeResolver(ResolverInterface $mimeResolver);
 
     /**
      * @return MimeResolverInterface

@@ -25,23 +25,28 @@
   },
   "require": {
     "kriswallsmith/assetic": "^1.4",
-    "msbios/msbios": "~1.0"
+    "msbios/msbios": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^5.7",
     "zendframework/zend-mvc": "^3.1",
-    "zendframework/zend-test": "^3.1",
-    "squizlabs/php_codesniffer": "^3.0",
-    "msbios/debug": "~1.0"
+    "msbios/test": "^1.0",
+    "msbios/debug": "^1.0"
   },
   "scripts": {
     "cs-check": "phpcs",
     "cs-fix": "phpcbf",
     "test": [
       "@cs-check",
-      "phpunit"
+      "phpunit --colors=always"
     ],
+    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+    "upload-coverage": "coveralls -v",
     "serve": "php -S 0.0.0.0:3107 -t public public/index.php",
     "commit": "git add . && git commit -a -m \"Lazy Composer Commiter\" && git push"
+  },
+  "extra": {
+    "zf": {
+      "component": "MSBios\\Assetic"
+    }
   }
 }

@@ -6,23 +6,26 @@
 namespace MSBios\Assetic\Factory;
 
 use Interop\Container\ContainerInterface;
-use MSBios\Assetic\Module;
+use MSBios\Assetic\AssetManager;
+use MSBios\Assetic\Listener\AssetListener;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
- * Class ModuleFactory
+ * Class AssetListenerFactory
  * @package MSBios\Assetic\Factory
  */
-class ModuleFactory implements FactoryInterface
+class AssetListenerFactory implements FactoryInterface
 {
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
      * @param array|null $options
-     * @return mixed
+     * @return AssetListener
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return $container->get('config')[Module::class];
+        return new AssetListener(
+            $container->get(AssetManager::class)
+        );
     }
 }

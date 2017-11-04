@@ -10,7 +10,7 @@ namespace MSBios\Assetic\Resolver;
  * Class MimeResolver
  * @package MSBios\Assetic\Resolver
  */
-class MimeResolver implements MimeResolverInterface
+class MimeResolver implements ResolverInterface // implements MimeResolverInterface
 {
     /**
      * Map for multiple extensions per mime-type, setting a main extension for the mime types.

@@ -10,8 +10,7 @@ use Assetic\Asset\AssetCollection;
 use Assetic\Asset\AssetInterface;
 use MSBios\Assetic\Exception\RuntimeException;
 use MSBios\Assetic\ResolverManagerAwareInterface;
-use MSBios\Assetic\ResolverManagerInterface;
-use Zend\Config\Config;
+use MSBios\Assetic\ResolverManagerAwareTrait;
 use Zend\Stdlib\ArrayUtils;
 
 /**
@@ -20,32 +19,31 @@ use Zend\Stdlib\ArrayUtils;
  */
 class CollectionResolver implements ResolverInterface, ResolverManagerAwareInterface
 {
-    /** @var Config */
-    protected $collection = [];
+    use ResolverManagerAwareTrait;
 
-    /** @var ResolverManagerInterface */
-    protected $resolverManager;
+    /** @var array */
+    protected $collection = [];
 
     /**
      * CollectionResolver constructor.
-     * @param Config $collection
+     * @param array $collection
      */
-    public function __construct(Config $collection)
+    public function __construct(array $collection)
     {
-        $this->clearCollections();
-        $this->addCollections($collection);
+        $this->clearCollection();
+        $this->addCollection($collection);
     }
 
     /**
-     * @param Config $collection
+     * @param array $collection
      * @return $this
      */
-    public function addCollections(Config $collection)
+    public function addCollection(array $collection)
     {
-        $this->collection = new Config(ArrayUtils::merge(
-            $this->collection->toArray(),
-            $collection->toArray()
-        ));
+        $this->collection = ArrayUtils::merge(
+            $this->collection,
+            $collection
+        );
 
         return $this;
     }
@@ -53,9 +51,9 @@ class CollectionResolver implements ResolverInterface, ResolverManagerAwareInter
     /**
      * @return $this
      */
-    public function clearCollections()
+    public function clearCollection()
     {
-        $this->collection = new Config([]);
+        $this->collection = [];
         return $this;
     }
 
@@ -65,9 +63,12 @@ class CollectionResolver implements ResolverInterface, ResolverManagerAwareInter
      */
     public function resolve($path)
     {
-        if (! $collection = $this->collection->get($path)) {
+        if (! isset($this->collection[$path])) {
             return null;
         }
+
+        /** @var array $assets */
+        $assets = $this->collection[$path];
 
         /** @var AssetCollection $assetCollection */
         $assetCollection = new AssetCollection;
@@ -77,7 +78,7 @@ class CollectionResolver implements ResolverInterface, ResolverManagerAwareInter
         $mimeType = null;
 
         /** @var string $map */
-        foreach ($collection as $map) {
+        foreach ($assets as $map) {
 
             /** @var AssetInterface $asset */
             if ($asset = $this->getResolverManager()->resolve($map)) {
@@ -99,23 +100,5 @@ class CollectionResolver implements ResolverInterface, ResolverManagerAwareInter
         $assetCollection->mimetype = 'text/plain';
 
         return $assetCollection;
-    }
-
-    /**
-     * @param ResolverManagerInterface $resolverManager
-     * @return $this
-     */
-    public function setResolverManager(ResolverManagerInterface $resolverManager)
-    {
-        $this->resolverManager = $resolverManager;
-        return $this;
-    }
-
-    /**
-     * @return ResolverManagerInterface
-     */
-    public function getResolverManager()
-    {
-        return $this->resolverManager;
     }
 }
