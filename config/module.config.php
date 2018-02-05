@@ -15,8 +15,8 @@ return [
                 Factory\ModuleFactory::class,
 
             // Listeners
-            Listener\AssetListener::class =>
-                Factory\AssetListenerFactory::class,
+            Listener\DispatchErrorListener::class =>
+                InvokableFactory::class,
 
             // Managers
             AssetManager::class =>
@@ -28,7 +28,7 @@ return [
             ResolverManager::class =>
                 Factory\ResolverManagerFactory::class,
 
-            // Reolvers
+            // Resolvers
             Resolver\CollectionResolver::class =>
                 Factory\CollectionResolverFactory::class,
             Resolver\MapResolver::class =>
@@ -37,6 +37,9 @@ return [
                 Factory\PathStackResolverFactory::class,
             Resolver\MimeResolver::class =>
                 InvokableFactory::class
+        ],
+        'initializers' => [
+            new Initializer\AssetManagerInitializer
         ]
     ],
 
@@ -63,8 +66,8 @@ return [
          * ]
          */
         'listeners' => [
-            Listener\AssetListener::class => [
-                'listener' => Listener\AssetListener::class,
+            Listener\DispatchErrorListener::class => [
+                'listener' => Listener\DispatchErrorListener::class,
                 'method' => 'onDispatchError',
                 'event' => \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
                 'priority' => 1,

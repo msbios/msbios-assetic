@@ -7,10 +7,12 @@
 namespace MSBios\Assetic\Listener;
 
 use Assetic\Asset\AssetInterface;
-use MSBios\Assetic\AssetManager;
+use MSBios\Assetic\AssertManagerAwareInterface;
+use MSBios\Assetic\AssertManagerAwareTrait;
 use MSBios\Assetic\AssetManagerInterface;
 use MSBios\Assetic\Module;
 use Zend\EventManager\EventInterface;
+use Zend\Http\PhpEnvironment\Request;
 use Zend\Http\PhpEnvironment\Response as HttpResponse;
 use Zend\Http\Response;
 use Zend\Mvc\Application;
@@ -18,22 +20,13 @@ use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class AssetListener
+ * Class DispatchErrorListener
  * @package MSBios\Assetic\Listener
  */
-class AssetListener
+class DispatchErrorListener implements AssertManagerAwareInterface
 {
-    /** @var AssetManagerInterface  */
-    protected $assetManager;
 
-    /**
-     * AssetListener constructor.
-     * @param AssetManagerInterface $assetManager
-     */
-    public function __construct(AssetManagerInterface $assetManager)
-    {
-        $this->assetManager = $assetManager;
-    }
+    use AssertManagerAwareTrait;
 
     /**
      * @param EventInterface $e
@@ -48,8 +41,15 @@ class AssetListener
         $serviceManager = $e->getTarget()
             ->getServiceManager();
 
+        /** @var Request $request */
+        $request = $e->getRequest();
+
+        if (! $request instanceof Request) {
+            return;
+        }
+
         /** @var AssetInterface $asset */
-        if (! $asset = $this->assetManager->resolve($e->getRequest())) {
+        if (! $asset = $this->getAssetManager()->resolve($e->getRequest())) {
             return;
         }
 

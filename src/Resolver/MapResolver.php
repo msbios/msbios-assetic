@@ -39,10 +39,10 @@ class MapResolver implements ResolverInterface, MimeResolverAwareInterface
      */
     public function addMaps(array $maps)
     {
-         $this->maps = ArrayUtils::merge(
-             $this->maps,
-             $maps
-         );
+        $this->maps = ArrayUtils::merge(
+            $this->maps,
+            $maps
+        );
 
          return $this;
     }

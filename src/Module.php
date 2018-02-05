@@ -28,7 +28,8 @@ class Module implements
     AutoloaderProviderInterface,
     ConsoleUsageProviderInterface
 {
-    const VERSION = '1.0.1';
+    /** @const VERSION */
+    const VERSION = '1.0.2';
 
     /**
      * @return mixed
