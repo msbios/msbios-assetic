@@ -6,26 +6,26 @@
 namespace MSBios\Assetic\Factory;
 
 use Interop\Container\ContainerInterface;
-use MSBios\Assetic\Module;
-use MSBios\Assetic\Resolver\PathStackResolver;
+use MSBios\Assetic\AssetManager;
+use MSBios\Assetic\Listener\DispatchErrorListener;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
- * Class PathStackResolverFactory
+ * Class DispatchErrorListenerFactory
  * @package MSBios\Assetic\Factory
  */
-class PathStackResolverFactory implements FactoryInterface
+class DispatchErrorListenerFactory implements FactoryInterface
 {
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
      * @param array|null $options
-     * @return PathStackResolver
+     * @return DispatchErrorListener
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new PathStackResolver(
-            $container->get(Module::class)['paths']
+        return new DispatchErrorListener(
+            $container->get(AssetManager::class)
         );
     }
 }

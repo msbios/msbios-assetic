@@ -567,11 +567,11 @@ class MimeResolver implements ResolverInterface // implements MimeResolverInterf
      */
     public function resolve($path)
     {
-        /** @var string $ext */
-        $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        /** @var string $extension */
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
 
-        if (isset($this->types[$ext])) {
-            return $this->types[$ext];
+        if (isset($this->types[$extension])) {
+            return $this->types[$extension];
         }
 
         return 'text/plain';
@@ -590,14 +590,5 @@ class MimeResolver implements ResolverInterface // implements MimeResolverInterf
 //        }
 //
 //        return !$extension ? null : $extension;
-//    }
-//
-//    /**
-//     * @param $path
-//     * @return mixed
-//     */
-//    public function resolve($path)
-//    {
-//        // TODO: Implement resolve() method.
 //    }
 }

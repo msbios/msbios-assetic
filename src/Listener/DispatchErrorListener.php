@@ -23,10 +23,18 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Class DispatchErrorListener
  * @package MSBios\Assetic\Listener
  */
-class DispatchErrorListener implements AssertManagerAwareInterface
+class DispatchErrorListener
 {
-
     use AssertManagerAwareTrait;
+
+    /**
+     * DispatchErrorListener constructor.
+     * @param AssetManagerInterface $assetManager
+     */
+    public function __construct(AssetManagerInterface $assetManager)
+    {
+        $this->setAssetManager($assetManager);
+    }
 
     /**
      * @param EventInterface $e

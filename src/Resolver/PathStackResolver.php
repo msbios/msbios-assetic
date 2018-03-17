@@ -25,10 +25,15 @@ class PathStackResolver implements ResolverInterface, MimeResolverAwareInterface
 
     /**
      * PathStackResolver constructor.
+     * @param array|null $paths
      */
-    public function __construct()
+    public function __construct(array $paths = null)
     {
         $this->clearPaths();
+
+        if (! is_null($paths)) {
+            $this->addPaths($paths);
+        }
     }
 
     /**

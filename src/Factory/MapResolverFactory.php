@@ -1,11 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: judzhin
- * Date: 8/7/17
- * Time: 11:54 AM
+ * @access protected
+ * @author Judzhin Miles <info[woof-woof]msbios.com>
  */
-
 namespace MSBios\Assetic\Factory;
 
 use Interop\Container\ContainerInterface;

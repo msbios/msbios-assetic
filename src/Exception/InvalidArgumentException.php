@@ -11,5 +11,5 @@ namespace MSBios\Assetic\Exception;
  */
 class InvalidArgumentException extends \InvalidArgumentException
 {
-
+    // ...
 }

@@ -11,5 +11,5 @@ namespace MSBios\Assetic\Exception;
  */
 class RuntimeException extends \RuntimeException
 {
-
+    // ...
 }

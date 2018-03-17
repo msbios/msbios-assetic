@@ -9,7 +9,6 @@ namespace MSBios\Assetic\Resolver;
 use Assetic\Asset\AssetInterface;
 use Assetic\Asset\FileAsset;
 use Assetic\Asset\HttpAsset;
-use Zend\Config\Config;
 use Zend\Stdlib\ArrayUtils;
 
 /**

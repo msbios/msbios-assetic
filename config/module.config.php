@@ -3,6 +3,7 @@
  * @access protected
  * @author Judzhin Miles <info[woof-woof]msbios.com>
  */
+
 namespace MSBios\Assetic;
 
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -16,7 +17,7 @@ return [
 
             // Listeners
             Listener\DispatchErrorListener::class =>
-                InvokableFactory::class,
+                Factory\DispatchErrorListenerFactory::class,
 
             // Managers
             AssetManager::class =>
@@ -37,9 +38,6 @@ return [
                 Factory\PathStackResolverFactory::class,
             Resolver\MimeResolver::class =>
                 InvokableFactory::class
-        ],
-        'initializers' => [
-            new Initializer\AssetManagerInitializer
         ]
     ],
 
@@ -58,7 +56,7 @@ return [
          * Expects: array
          * Default: [
          *     Listener\AssetListener::class =>
-         *         'listener' => Listener\AssetListener::class,
+         *         'listener' => Listener\DispatchErrorListener::class,
          *         'method' => 'onDispatchError',
          *         'event' => \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
          *         'priority' => 1,
@@ -77,26 +75,65 @@ return [
         /**
          *
          * Expects: array
-         * Default: true
+         * Default: [
+         *     Resolver\PathStackResolver::class => 100500,
+         *     Resolver\CollectionResolver::class => 100700,
+         *     Resolver\MapResolver::class => 100900,
+         * ]
          */
         'resolvers' => [
-            Resolver\MapResolver::class => 100900,
-            Resolver\CollectionResolver::class => 100700,
             Resolver\PathStackResolver::class => 100500,
+            Resolver\CollectionResolver::class => 100700,
+            Resolver\MapResolver::class => 100900,
         ],
 
+        /**
+         *
+         * Expects: array
+         * Default: [
+         *     // ...
+         * ]
+         */
         'collections' => [
         ],
 
+        /**
+         *
+         * Expects: array
+         * Default: [
+         *     // ...
+         * ]
+         */
         'paths' => [
         ],
 
+        /**
+         *
+         * Expects: array
+         * Default: [
+         *     // ...
+         * ]
+         */
         'maps' => [
         ],
 
+        /**
+         *
+         * Expects: array
+         * Default: [
+         *     // ...
+         * ]
+         */
         'filters' => [
         ],
 
+        /**
+         *
+         * Expects: array
+         * Default: [
+         *     // ...
+         * ]
+         */
         'caching' => [
         ],
 
