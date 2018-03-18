@@ -57,7 +57,7 @@ class DispatchErrorListener
         }
 
         /** @var AssetInterface $asset */
-        if (! $asset = $this->getAssetManager()->resolve($e->getRequest())) {
+        if (! $asset = $this->getAssetManager()->resolve($request)) {
             return;
         }
 

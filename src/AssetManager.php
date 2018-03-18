@@ -19,11 +19,12 @@ class AssetManager implements AssetManagerInterface
     /** @var ResolverManagerInterface */
     protected $resolverManager;
 
+    /** @var FilterManagerInterface */
+    protected $filterManager;
+
     /** @var CacheManagerInterface */
     protected $cacheManager;
 
-    /** @var FilterManagerInterface */
-    protected $filterManager;
 
     /**
      * AssetManager constructor.
@@ -33,12 +34,12 @@ class AssetManager implements AssetManagerInterface
      */
     public function __construct(
         ResolverManagerInterface $resolverManager,
-        CacheManagerInterface $cacheManager,
-        FilterManagerInterface $filterManager
+        FilterManagerInterface $filterManager,
+        CacheManagerInterface $cacheManager
     ) {
         $this->resolverManager = $resolverManager;
-        $this->cacheManager = $cacheManager;
         $this->filterManager = $filterManager;
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -64,6 +65,9 @@ class AssetManager implements AssetManagerInterface
                 'Expected property "mimetype" on asset.'
             );
         }
+
+        /** @var AssetInterface $asset */
+        $asset = $this->cacheManager->cache($asset, $path);
 
         // $this->getAssetFilterManager()->setFilters($this->path, $this->asset);
         // $this->asset    = $this->getAssetCacheManager()->setCache($this->path, $this->asset);

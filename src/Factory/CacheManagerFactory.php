@@ -7,30 +7,27 @@
 namespace MSBios\Assetic\Factory;
 
 use Interop\Container\ContainerInterface;
-use MSBios\Assetic\AssetManager;
 use MSBios\Assetic\CacheManager;
-use MSBios\Assetic\FilterManager;
-use MSBios\Assetic\ResolverManager;
+use MSBios\Assetic\Module;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
- * Class AssetManagerFactory
+ * Class CacheManagerFactory
  * @package MSBios\Assetic\Factory
  */
-class AssetManagerFactory implements FactoryInterface
+class CacheManagerFactory implements FactoryInterface
 {
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
      * @param array|null $options
-     * @return AssetManager
+     * @return CacheManager
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new AssetManager(
-            $container->get(ResolverManager::class),
-            $container->get(FilterManager::class),
-            $container->get(CacheManager::class)
+        return new CacheManager(
+            $container,
+            $container->get(Module::class)['caching']
         );
     }
 }

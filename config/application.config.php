@@ -9,6 +9,7 @@ return [
     // Retrieve list of modules used in this application.
     'modules' => [
         'Zend\Router',
+        'MSBios\Cache',
         'MSBios\Assetic',
     ],
 

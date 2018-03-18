@@ -25,7 +25,8 @@
   },
   "require": {
     "kriswallsmith/assetic": "^1.4",
-    "msbios/msbios": "^1.0"
+    "msbios/msbios": "^1.0",
+    "msbios/cache": "^1.0"
   },
   "require-dev": {
     "zendframework/zend-mvc": "^3.1",

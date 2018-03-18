@@ -23,7 +23,7 @@ return [
             AssetManager::class =>
                 Factory\AssetManagerFactory::class,
             CacheManager::class =>
-                InvokableFactory::class,
+                Factory\CacheManagerFactory::class,
             FilterManager::class =>
                 InvokableFactory::class,
             ResolverManager::class =>
@@ -37,7 +37,15 @@ return [
             Resolver\PathStackResolver::class =>
                 Factory\PathStackResolverFactory::class,
             Resolver\MimeResolver::class =>
-                InvokableFactory::class
+                InvokableFactory::class,
+
+            // Cache
+            \Assetic\Cache\FilesystemCache::class =>
+                Factory\FilesystemCacheFactory::class,
+            Cache\FilePathCache::class =>
+                InvokableFactory::class,
+            Cache\StorageCache::class =>
+                Factory\StorageCacheFactory::class
         ]
     ],
 
@@ -49,6 +57,20 @@ return [
          * Default: true
          */
         'default_cleanup_buffer' => true,
+
+        /**
+         *
+         * Expects: string
+         * Default:
+         */
+        'default_filter_provider' => '',
+
+        /**
+         *
+         * Expects: string
+         * Default:
+         */
+        'default_cache_provider' => '',
 
         /**
          * Enables or disables the deploy.
@@ -95,26 +117,29 @@ return [
          * ]
          */
         'collections' => [
+            // 'js/d.js' => [
+            //     'js/a.js',
+            //     'js/b.js',
+            //     'js/c.js',
+            // ],
         ],
 
         /**
          *
          * Expects: array
-         * Default: [
-         *     // ...
-         * ]
+         * Default: []
          */
         'paths' => [
+            // __DIR__ . '/some/particular/directory',
         ],
 
         /**
          *
          * Expects: array
-         * Default: [
-         *     // ...
-         * ]
+         * Default: []
          */
         'maps' => [
+            // 'specific-path.css' => __DIR__ . '/some/particular/file.css',
         ],
 
         /**
@@ -135,6 +160,7 @@ return [
          * ]
          */
         'caching' => [
+
         ],
 
         // 'view_helper' => [
