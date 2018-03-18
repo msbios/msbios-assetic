@@ -66,6 +66,8 @@ class AssetManager implements AssetManagerInterface
             );
         }
 
+        $this->filterManager->filter($asset, $path);
+
         /** @var AssetInterface $asset */
         $asset = $this->cacheManager->cache($asset, $path);
 

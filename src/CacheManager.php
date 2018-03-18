@@ -18,7 +18,7 @@ use Interop\Container\ContainerInterface;
 class CacheManager implements CacheManagerInterface
 {
 
-    /** @var  ContainerInterface */
+    /** @var ContainerInterface */
     protected $container;
 
     /** @var  array */

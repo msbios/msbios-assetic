@@ -25,7 +25,7 @@ return [
             CacheManager::class =>
                 Factory\CacheManagerFactory::class,
             FilterManager::class =>
-                InvokableFactory::class,
+                Factory\FilterManagerFactory::class,
             ResolverManager::class =>
                 Factory\ResolverManagerFactory::class,
 
@@ -39,7 +39,11 @@ return [
             Resolver\MimeResolver::class =>
                 InvokableFactory::class,
 
-            // Cache
+            // Filters
+            \Assetic\Filter\JSMinFilter::class =>
+                InvokableFactory::class,
+
+            // Caches
             \Assetic\Cache\FilesystemCache::class =>
                 Factory\FilesystemCacheFactory::class,
             Cache\FilePathCache::class =>
