@@ -25,7 +25,6 @@ class AssetManager implements AssetManagerInterface
     /** @var CacheManagerInterface */
     protected $cacheManager;
 
-
     /**
      * AssetManager constructor.
      * @param ResolverManagerInterface $resolverManager
@@ -44,7 +43,7 @@ class AssetManager implements AssetManagerInterface
 
     /**
      * @param Request $request
-     * @return AssetInterface|bool
+     * @return bool
      */
     public function resolve(Request $request)
     {
@@ -67,22 +66,7 @@ class AssetManager implements AssetManagerInterface
         }
 
         $this->filterManager->filter($asset, $path);
-
         /** @var AssetInterface $asset */
-        $asset = $this->cacheManager->cache($asset, $path);
-
-        // $this->getAssetFilterManager()->setFilters($this->path, $this->asset);
-        // $this->asset    = $this->getAssetCacheManager()->setCache($this->path, $this->asset);
-        // $mimeType       = $this->asset->mimetype;
-        // $assetContents  = $this->asset->dump();
-        // @codeCoverageIgnoreStart
-        //if (function_exists('mb_strlen')) {
-        //    $contentLength = mb_strlen($assetContents, '8bit');
-        //} else {
-        //    $contentLength = strlen($assetContents);
-        //}
-        // @codeCoverageIgnoreEnd
-
-        return $asset;
+        return $this->cacheManager->cache($asset, $path);
     }
 }
