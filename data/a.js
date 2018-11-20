@@ -31,14 +31,43 @@ alert("a");
         }
     };
 
+    /**
+     *
+     * @type {{ready: CPanel.ready, _init: {initA: CPanel._init.initA}}}
+     */
     CPanel.prototype = {
 
         /**
          *
          * @param options
          */
-        initA: function (options) {
-            new A(options);
+        ready: function (options) {
+
+            var thisRef = this, initializer = $.Deferred(function (deffered) {
+                $(function () {
+                    deffered.resolve.call(thisRef, deffered.options);
+                });
+            });
+
+            this.options = $.extend({}, this.DEFAULTS, options);
+
+            $.each(this._init, function (name) {
+                if (name in thisRef.options) {
+                    initializer.options = thisRef.options[name];
+                    initializer.then(this, initializer.options);
+                }
+            });
+
+        },
+
+        _init: {
+            /**
+             *
+             * @param options
+             */
+            initA: function (options) {
+                new A(options);
+            }
         }
     };
 
@@ -48,4 +77,8 @@ alert("a");
 }).call(this);
 
 
-CPanel.initA({});
+CPanel.ready({
+    initA: {
+        // ...
+    }
+});
