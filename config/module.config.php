@@ -81,28 +81,6 @@ return [
         'default_cache_provider' => '',
 
         /**
-         * Enables or disables the deploy.
-         *
-         * Expects: array
-         * Default: [
-         *     Listener\AssetListener::class =>
-         *         'listener' => Listener\DispatchErrorListener::class,
-         *         'method' => 'onDispatchError',
-         *         'event' => \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
-         *         'priority' => 1,
-         *     ],
-         * ]
-         */
-        'listeners' => [
-            //Listener\DispatchErrorListener::class => [
-            //    'listener' => Listener\DispatchErrorListener::class,
-            //    'method' => 'onDispatchError',
-            //    'event' => \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
-            //    'priority' => 1,
-            //],
-        ],
-
-        /**
          *
          * Expects: array
          * Default: [
