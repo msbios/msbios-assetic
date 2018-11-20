@@ -60,19 +60,18 @@ class CacheManager implements CacheManagerInterface
      */
     protected function find($path)
     {
-        /** @var array $config */
         if (! isset($this->options[$path])) {
             return null;
         }
 
-        /** @var array $config */
-        $config = $this->options[$path];
+        /** @var array $options */
+        $options = $this->options[$path];
 
         /** @var mixed $cache */
-        $cache = $config['cache'];
+        $cache = $options['cache'];
 
-        if (is_string($cache) && $this->container->has($config['cache'])) {
-            return $this->container->build($cache, $config['options']);
+        if (is_string($cache) && $this->container->has($options['cache'])) {
+            return $this->container->build($cache, $options['options']);
         }
 
         return null;

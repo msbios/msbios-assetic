@@ -48,13 +48,8 @@ class AssetManager implements AssetManagerInterface
      */
     public function resolve(RequestInterface $request)
     {
-        /** @var string $fullPath */
-        $fullPath = $request
-            ->getUri()
-            ->getPath();
-
         /** @var string $path */
-        $path = substr($fullPath, strlen($request->getBasePath()) + 1);
+        $path = substr($request->getUri()->getPath(), strlen($request->getBasePath()) + 1);
 
         /** @var AssetInterface $asset */
         if (! $asset = $this->resolverManager->resolve($path)) {

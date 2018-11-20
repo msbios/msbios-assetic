@@ -35,7 +35,7 @@ class FilterManager implements FilterManagerInterface
     /**
      * @param AssetInterface $asset
      * @param $path
-     * @return AssetInterface|AssetCache
+     * @return AssetInterface
      */
     public function filter(AssetInterface $asset, $path)
     {
@@ -61,20 +61,18 @@ class FilterManager implements FilterManagerInterface
      */
     protected function find($path)
     {
-        /** @var array $config */
         if (! isset($this->options[$path])) {
             return null;
         }
 
         /** @var array $config */
-        $config = $this->options[$path];
-
+        $options = $this->options[$path];
 
         /** @var mixed $filter */
-        $filter = $config['filter'];
+        $filter = $options['filter'];
 
-        if (is_string($filter) && $this->container->has($config['filter'])) {
-            return $this->container->build($filter, $config['options']);
+        if (is_string($filter) && $this->container->has($options['filter'])) {
+            return $this->container->build($filter, $options['options']);
         }
 
         return null;
