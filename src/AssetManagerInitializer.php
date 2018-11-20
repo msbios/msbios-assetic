@@ -3,16 +3,14 @@
  * @access protected
  * @author Judzhin Miles <info[woof-woof]msbios.com>
  */
-namespace MSBios\Assetic\Initializer;
+namespace MSBios\Assetic;
 
 use Interop\Container\ContainerInterface;
-use MSBios\Assetic\AssertManagerAwareInterface;
-use MSBios\Assetic\AssetManager;
 use Zend\ServiceManager\Initializer\InitializerInterface;
 
 /**
  * Class AssetManagerInitializer
- * @package MSBios\Assetic\Initializer
+ * @package MSBios\Assetic
  */
 class AssetManagerInitializer implements InitializerInterface
 {
@@ -22,8 +20,9 @@ class AssetManagerInitializer implements InitializerInterface
      */
     public function __invoke(ContainerInterface $container, $instance)
     {
-        if ($instance instanceof AssertManagerAwareInterface) {
-            $instance->setAssetManager($container->get(AssetManager::class));
+        if ($instance instanceof AssetManagerAwareInterface) {
+            $instance
+                ->setAssetManager($container->get(AssetManager::class));
         }
     }
 

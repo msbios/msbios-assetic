@@ -11,7 +11,7 @@ return [
     Module::class => [
 
         'collections' => [
-            'd.js' => [
+            'd.min.js' => [
                 'a.js',
                 'b.js',
                 'c.js',
@@ -26,15 +26,15 @@ return [
         ],
 
         'maps' => [
-            'a.js' => './assets/a.js',
-            'b.js' => './assets/b.js',
-            'c.js' => './assets/c.js',
-            'a.css' => './assets/a.css',
-            'b.css' => './assets/b.css',
+            'a.js' => './data/a.js',
+            'b.js' => './data/b.js',
+            'c.js' => './data/c.js',
+            'a.css' => './data/a.css',
+            'b.css' => './data/b.css',
         ],
 
         'filters' => [
-            'd.js' => [
+            'd.min.js' => [
                 'filter' => \Assetic\Filter\JSMinFilter::class,
                 'options' => []
             ]

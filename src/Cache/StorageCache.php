@@ -18,7 +18,7 @@ class StorageCache implements CacheInterface
     protected $storage;
 
     /**
-     * ZendCache constructor.
+     * StorageCache constructor.
      * @param StorageInterface $storage
      */
     public function __construct(StorageInterface $storage)
@@ -27,44 +27,49 @@ class StorageCache implements CacheInterface
     }
 
     /**
-     * Checks if the cache has a value for a key.
+     * @inheritdoc
      *
-     * @param string $key A unique key
-     *
-     * @return Boolean Whether the cache has a value for this key
+     * @param string $key
+     * @return bool
      */
     public function has($key)
     {
-        return $this->storage->hasItem($key);
+        return $this
+            ->storage
+            ->hasItem($key);
     }
 
     /**
-     * Returns the value for a key.
+     * @inheritdoc
      *
-     * @param string $key A unique key
-     *
-     * @return string|null The value in the cache
+     * @param string $key
+     * @return mixed|null|string
      */
     public function get($key)
     {
-        return $this->storage->getItem($key);
+        return $this
+            ->storage
+            ->getItem($key);
     }
 
     /**
-     * Sets a value in the cache.
+     * @inheritdoc
      *
-     * @param string $key A unique key
-     * @param string $value The value to cache
+     * @param string $key
+     * @param string $value
+     * @return bool
      */
     public function set($key, $value)
     {
-        return $this->storage->setItem($key, $value);
+        return $this
+            ->storage
+            ->setItem($key, $value);
     }
 
     /**
-     * Removes a value from the cache.
+     * @inheritdoc
      *
-     * @param string $key A unique key
+     * @param string $key
      */
     public function remove($key)
     {

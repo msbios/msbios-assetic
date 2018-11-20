@@ -21,7 +21,7 @@ class CacheManagerFactory implements FactoryInterface
      * @param ContainerInterface $container
      * @param string $requestedName
      * @param array|null $options
-     * @return CacheManager
+     * @return CacheManager|object
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {

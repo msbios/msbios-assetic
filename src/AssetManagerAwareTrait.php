@@ -1,18 +1,16 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: judzhin
- * Date: 2/5/18
- * Time: 6:13 PM
+ * @access protected
+ * @author Judzhin Miles <info[woof-woof]msbios.com>
  */
 
 namespace MSBios\Assetic;
 
 /**
- * Trait AssertManagerAwareTrait
+ * Trait AssetManagerAwareTrait
  * @package MSBios\Assetic
  */
-trait AssertManagerAwareTrait
+trait AssetManagerAwareTrait
 {
     /** @var AssetManagerInterface */
     protected $assetManager;

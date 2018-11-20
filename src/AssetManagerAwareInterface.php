@@ -6,10 +6,10 @@
 namespace MSBios\Assetic;
 
 /**
- * Interface AssertManagerAwareInterface
+ * Interface AssetManagerAwareInterface
  * @package MSBios\Assetic
  */
-interface AssertManagerAwareInterface
+interface AssetManagerAwareInterface
 {
     /**
      * @return AssetManagerInterface

@@ -9,6 +9,7 @@ namespace MSBios\Assetic;
 use Assetic\Asset\AssetInterface;
 use MSBios\Assetic\Exception\RuntimeException;
 use Zend\Http\PhpEnvironment\Request;
+use Zend\Stdlib\RequestInterface;
 
 /**
  * Class AssetManager
@@ -28,8 +29,8 @@ class AssetManager implements AssetManagerInterface
     /**
      * AssetManager constructor.
      * @param ResolverManagerInterface $resolverManager
-     * @param CacheManagerInterface $cacheManager
      * @param FilterManagerInterface $filterManager
+     * @param CacheManagerInterface $cacheManager
      */
     public function __construct(
         ResolverManagerInterface $resolverManager,
@@ -42,13 +43,14 @@ class AssetManager implements AssetManagerInterface
     }
 
     /**
-     * @param Request $request
-     * @return bool
+     * @param RequestInterface|Request $request
+     * @return bool|mixed
      */
-    public function resolve(Request $request)
+    public function resolve(RequestInterface $request)
     {
         /** @var string $fullPath */
-        $fullPath = $request->getUri()
+        $fullPath = $request
+            ->getUri()
             ->getPath();
 
         /** @var string $path */
@@ -65,8 +67,12 @@ class AssetManager implements AssetManagerInterface
             );
         }
 
-        $this->filterManager->filter($asset, $path);
-        /** @var AssetInterface $asset */
-        return $this->cacheManager->cache($asset, $path);
+        $this
+            ->filterManager
+            ->filter($asset, $path);
+
+        return $this
+            ->cacheManager
+            ->cache($asset, $path);
     }
 }

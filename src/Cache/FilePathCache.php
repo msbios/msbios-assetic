@@ -7,13 +7,14 @@ namespace MSBios\Assetic\Cache;
 
 use Assetic\Cache\CacheInterface;
 use MSBios\Assetic\Exception\RuntimeException;
+use Zend\Stdlib\AbstractOptions;
 use Zend\Stdlib\ErrorHandler;
 
 /**
  * Class FilePathCache
  * @package MSBios\Assetic\Cache
  */
-class FilePathCache implements CacheInterface
+class FilePathCache extends AbstractOptions implements CacheInterface
 {
     /** @var string */
     protected $dirname;
@@ -26,23 +27,23 @@ class FilePathCache implements CacheInterface
 
     /**
      * FilePathCache constructor.
-     * @param string $dirname
-     * @param string $filename
+     * @param null $options
      */
-    public function __construct(array $options)
+    public function __construct($options = null)
     {
-        $this->dirname = $options['dirname'];
-        $this->filename = $options['filename'];
-        $this->pathname = rtrim($this->dirname, DIRECTORY_SEPARATOR)
-            . DIRECTORY_SEPARATOR . ltrim($this->filename, DIRECTORY_SEPARATOR);
+        parent::__construct($options);
+
+        //$this->dirname = $options['dirname'];
+        //$this->filename = $options['filename'];
+        //$this->pathname = rtrim($this->dirname, DIRECTORY_SEPARATOR)
+        //    . DIRECTORY_SEPARATOR . ltrim($this->filename, DIRECTORY_SEPARATOR);
     }
 
     /**
-     * Checks if the cache has a value for a key.
+     * @inheritdoc
      *
-     * @param string $key A unique key
-     *
-     * @return Boolean Whether the cache has a value for this key
+     * @param string $key
+     * @return bool
      */
     public function has($key)
     {
@@ -50,11 +51,10 @@ class FilePathCache implements CacheInterface
     }
 
     /**
-     * Returns the value for a key.
+     * @inheritdoc
      *
-     * @param string $key A unique key
-     *
-     * @return string|null The value in the cache
+     * @param string $key
+     * @return bool|null|string
      */
     public function get($key)
     {
@@ -66,10 +66,11 @@ class FilePathCache implements CacheInterface
     }
 
     /**
-     * Sets a value in the cache.
+     * @inheritdoc
      *
-     * @param string $key A unique key
-     * @param string $value The value to cache
+     * @param string $key
+     * @param string $value
+     * @throws \ErrorException
      */
     public function set($key, $value)
     {
@@ -99,7 +100,7 @@ class FilePathCache implements CacheInterface
         }
 
         // Use "rename" to achieve atomic writes
-        $tmpfilepath = $cachedir . '/MSBiosAsseticAssetManagerFilePathCache_' . $filename;
+        $tmpfilepath = $cachedir . '/MSBiosAssetic' . $filename;
 
         if (@file_put_contents($tmpfilepath, $value, LOCK_EX) === false) {
             throw new RuntimeException('Unable to write file ' . $this->pathname);
@@ -109,9 +110,11 @@ class FilePathCache implements CacheInterface
     }
 
     /**
-     * Removes a value from the cache.
+     * @inheritdoc
      *
-     * @param string $key A unique key
+     * @param string $key
+     * @return bool
+     * @throws \ErrorException
      */
     public function remove($key)
     {

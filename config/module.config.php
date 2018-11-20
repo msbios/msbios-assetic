@@ -6,18 +6,18 @@
 
 namespace MSBios\Assetic;
 
+use MSBios\Factory\ModuleFactory;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
 
     'service_manager' => [
         'factories' => [
-            Module::class =>
-                Factory\ModuleFactory::class,
+            AssetListenerAggregate::class =>
+                Factory\AssetListenerAggregateFactory::class,
 
-            // Listeners
-            Listener\DispatchErrorListener::class =>
-                Factory\DispatchErrorListenerFactory::class,
+            Module::class =>
+                ModuleFactory::class,
 
             // Managers
             AssetManager::class =>
@@ -51,6 +51,10 @@ return [
             Cache\StorageCache::class =>
                 Factory\StorageCacheFactory::class
         ]
+    ],
+
+    'listeners' => [
+        AssetListenerAggregate::class
     ],
 
     Module::class => [
@@ -90,12 +94,12 @@ return [
          * ]
          */
         'listeners' => [
-            Listener\DispatchErrorListener::class => [
-                'listener' => Listener\DispatchErrorListener::class,
-                'method' => 'onDispatchError',
-                'event' => \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
-                'priority' => 1,
-            ],
+            //Listener\DispatchErrorListener::class => [
+            //    'listener' => Listener\DispatchErrorListener::class,
+            //    'method' => 'onDispatchError',
+            //    'event' => \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
+            //    'priority' => 1,
+            //],
         ],
 
         /**

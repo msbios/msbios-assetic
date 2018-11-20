@@ -20,7 +20,7 @@ class CollectionResolverFactory implements FactoryInterface
      * @param ContainerInterface $container
      * @param string $requestedName
      * @param array|null $options
-     * @return CollectionResolver
+     * @return CollectionResolver|object
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {

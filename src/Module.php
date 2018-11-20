@@ -22,11 +22,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Class Module
  * @package MSBios\Assetic
  */
-class Module implements
-    ModuleInterface,
-    BootstrapListenerInterface,
-    AutoloaderProviderInterface,
-    ConsoleUsageProviderInterface
+class Module implements ModuleInterface, AutoloaderProviderInterface, ConsoleUsageProviderInterface
 {
     /** @const VERSION */
     const VERSION = '1.0.5';
@@ -39,25 +35,25 @@ class Module implements
         return include __DIR__ . '/../config/module.config.php';
     }
 
-    /**
-     * Listen to the bootstrap event
-     *
-     * @param EventInterface $e
-     * @return array
-     */
-    public function onBootstrap(EventInterface $e)
-    {
-        /** @var ApplicationInterface $target */
-        $target = $e->getTarget();
-
-        /** @var ServiceLocatorInterface $serviceManager */
-        $serviceManager = $target->getServiceManager();
-
-        (new LazyListenerAggregate(
-            $serviceManager->get(self::class)['listeners'],
-            $serviceManager
-        ))->attach($target->getEventManager());
-    }
+    ///**
+    // * Listen to the bootstrap event
+    // *
+    // * @param EventInterface $e
+    // * @return array
+    // */
+    //public function onBootstrap(EventInterface $e)
+    //{
+    //    /** @var ApplicationInterface $target */
+    //    $target = $e->getTarget();
+    //
+    //    /** @var ServiceLocatorInterface $serviceManager */
+    //    $serviceManager = $target->getServiceManager();
+    //
+    //    (new LazyListenerAggregate(
+    //        $serviceManager->get(self::class)['listeners'],
+    //        $serviceManager
+    //    ))->attach($target->getEventManager());
+    //}
 
     /**
      * Return an array for passing to Zend\Loader\AutoloaderFactory.

@@ -20,7 +20,7 @@ class PathStackResolverFactory implements FactoryInterface
      * @param ContainerInterface $container
      * @param string $requestedName
      * @param array|null $options
-     * @return PathStackResolver
+     * @return PathStackResolver|object
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {

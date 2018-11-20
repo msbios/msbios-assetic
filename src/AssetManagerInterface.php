@@ -5,7 +5,7 @@
  */
 namespace MSBios\Assetic;
 
-use Zend\Http\PhpEnvironment\Request;
+use Zend\Stdlib\RequestInterface;
 
 /**
  * Interface AssetManagerInterface
@@ -14,8 +14,8 @@ use Zend\Http\PhpEnvironment\Request;
 interface AssetManagerInterface
 {
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      * @return mixed
      */
-    public function resolve(Request $request);
+    public function resolve(RequestInterface $request);
 }

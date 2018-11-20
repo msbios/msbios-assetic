@@ -17,7 +17,6 @@ use Interop\Container\ContainerInterface;
  */
 class CacheManager implements CacheManagerInterface
 {
-
     /** @var ContainerInterface */
     protected $container;
 
@@ -57,7 +56,7 @@ class CacheManager implements CacheManagerInterface
 
     /**
      * @param $path
-     * @return mixed|null
+     * @return null
      */
     protected function find($path)
     {
