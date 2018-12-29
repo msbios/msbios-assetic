@@ -15,7 +15,6 @@ use Zend\ServiceManager\Factory\FactoryInterface;
  */
 class FilesystemCacheFactory implements FactoryInterface
 {
-
     /**
      * @param ContainerInterface $container
      * @param string $requestedName

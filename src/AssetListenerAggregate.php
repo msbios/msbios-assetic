@@ -9,6 +9,7 @@ use Assetic\Asset\AssetInterface;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
+use Zend\Http\PhpEnvironment\Request as HttpRequest;
 use Zend\Http\PhpEnvironment\Response as HttpResponse;
 use Zend\Mvc\Application;
 use Zend\Mvc\MvcEvent;
@@ -60,7 +61,7 @@ class AssetListenerAggregate extends AbstractListenerAggregate implements AssetM
         /** @var RequestInterface $request */
         $request = $e->getRequest();
 
-        if (! $request instanceof RequestInterface) {
+        if (! $request instanceof HttpRequest) {
             return;
         }
 
