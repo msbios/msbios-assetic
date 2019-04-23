@@ -16,7 +16,7 @@ use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 class Module extends \MSBios\Module implements ConsoleUsageProviderInterface
 {
     /** @const VERSION */
-    const VERSION = '1.0.7';
+    const VERSION = '1.0.8';
 
     /**
      * @inheritdoc

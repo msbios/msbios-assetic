@@ -136,6 +136,7 @@ return [
          * ]
          */
         'filters' => [
+            // ...
         ],
 
         /**
@@ -146,6 +147,7 @@ return [
          * ]
          */
         'caching' => [
+            // ...
         ],
 
         // 'view_helper' => [
