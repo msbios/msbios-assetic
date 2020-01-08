@@ -26,13 +26,12 @@
   "require": {
     "kriswallsmith/assetic": "^1.4",
     "linkorb/jsmin-php": "^1.0",
-    "msbios/msbios": "^1.0",
-    "msbios/cache": "^1.0"
+    "msbios/cache": "^2.0"
   },
   "require-dev": {
     "zendframework/zend-mvc": "^3.1",
-    "msbios/test": "^1.0",
-    "msbios/debug": "^1.0"
+    "msbios/test": "^2.0",
+    "msbios/debug": "^2.0"
   },
   "scripts": {
     "cs-check": "phpcs",
@@ -42,8 +41,7 @@
       "phpunit --colors=always"
     ],
     "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-    "upload-coverage": "coveralls -v",
-    "serve": "php -S 0.0.0.0:3107 -t public public/index.php"
+    "upload-coverage": "coveralls -v"
   },
   "extra": {
     "zf": {
