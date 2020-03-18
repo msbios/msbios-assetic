@@ -2,14 +2,31 @@ version: '3.5'
 
 services:
 
-  # php-cli
-  php-cli:
+  # php-fpm
+  php-fpm:
+    container_name: portal-php-fpm
     build:
-      context: ./
-      dockerfile: Dockerfile
+      context: .
+      target: ${APP_ENV}
+      dockerfile: .docker/php-fpm/Dockerfile
+      args:
+        APP_ENV: ${APP_ENV}
     volumes:
-    - .:/var/www
-    - composer:/root/.composer/cache
+      - ./:/var/www/html
+      - ~/.composer:/root/.composer/cache
 
-volumes:
-  composer:
+  # nginx
+  nginx:
+    container_name: assetic-nginx
+    build:
+      context: .
+      target: ${APP_ENV}
+      dockerfile: .docker/nginx/Dockerfile
+      args:
+        APP_ENV: ${APP_ENV}
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 3107:80
+    depends_on:
+      - php-fpm

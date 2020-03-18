@@ -6,8 +6,8 @@
 
 namespace MSBios\Assetic;
 
+use Laminas\ServiceManager\Factory\InvokableFactory;
 use MSBios\Factory\ModuleFactory;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
 
